@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+svg {
+  display: block;
+  margin: auto;
+  margin-top: -100px;
+}
+
+.node {
+  font-family: Open Sans, sans-serif;;
+  font-size: 13px;
+  font-weight: bold;
+  text-rendering: optimizelegibility;
+} 
+
+.link {
+  fill: none;
+  stroke: #8D8D8D;
+  stroke-width: 1px;
+}
+
+.funcionalidade circle {
+  fill: #9A6DB0;
+}
+
+.conceitual circle{
+  fill: #5DA1C4;
+}
+
+.tecnologia circle{
+  fill: #F8A51B;
+}
+
+.apecto circle{
+  fill: #AED361;
+}
+
+.raiz circle{
+  fill: #34373C;
+}
+  
+.raiz text{
+  fill: #FFF;
+  font-size: 14px;
+}
+
+/* Example-specific styles */
+.scaling-svg-container {
+  position: relative; 
+  height:0; 
+  width: 100%; 
+  padding: 0;
+  padding-bottom: 100%; 
+  /* over-ride this inline for aspect ratio other than square */
+}
+.scaling-svg {
+  position: absolute; 
+  height: 100%; 
+  width: 100%; 
+  left: 0; 
+  top:0;
+}

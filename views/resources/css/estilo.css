@@ -1,0 +1,30 @@
+/*Materialize CSS*/
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Main NavBar*/
+nav,
+.page-footer {
+  background-color: var(--main-color, black);
+}
+
+/* End Materialize CSS*/
+
+/* My CSS*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+:root {
+    font-family: Open Sans, sans-serif;;
+  --main-color: #212121;
+}
+
+.hidden {
+  display: none !important;
+}
