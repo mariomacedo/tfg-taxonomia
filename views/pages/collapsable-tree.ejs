@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <% include ../partials/head %>
+
+    <link rel="http://mbostock.github.io/d3/talk/20111018/style.css">
+    <script src="http://mbostock.github.io/d3/talk/20111018/d3/d3.js"></script>
+    <script src="http://mbostock.github.io/d3/talk/20111018/d3/d3.layout.js"></script>
+    <style type="text/css">
+        .node circle {
+            cursor: pointer;
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        .node text {
+            font-size: 11px;
+        }
+
+        path.link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <% include ../partials/header %>
+        <div id="body">
+            <div id="footer">
+            </div>
+        </div>
+        <script src="js/collapsable-tree.js"></script>
+    </main>
+</body>
+
+<% include ../partials/footer %>
+
+</html>

@@ -2,11 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const passportSetup = require("./config/passport-setup");
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
 const morgan = require("morgan");
 
 //Routers
+const viewRoutes = require("./routes/viewRoutes");
+const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -55,6 +58,8 @@ mongoose.connect(
   }
 );
 
+app.use("", viewRoutes);
+app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 
 // create home route
@@ -63,19 +68,19 @@ app.get("/", (req, res) => {
 });
 
 app.use((req, res, next) => {
-    const error = new Error("Not found");
-    error.status = 404;
-    next(error);
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
   });
-  
-  app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-      error: {
-        message: error.message
-      }
-    });
-  });
+});
 
 app.listen(8080, () => {
   console.log("We are live @ :8080");

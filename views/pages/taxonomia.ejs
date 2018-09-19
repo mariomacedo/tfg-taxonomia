@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+    <script src="/dist/js/d3.v3.min.js"></script>
+    <link rel="stylesheet" href="/css/tree.css">
+    <script src="/js/tree.js"></script>
+</head>
+
+<body>
+    <% include ../partials/header %>
+    <div class="row">
+        <div class="col s12 m12 l12" id="taxonomy_tree" class="scaling-svg-container"></div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        montaArvore();
+    });
+</script>
+
+<% include ../partials/footer %>
+
+</html>
