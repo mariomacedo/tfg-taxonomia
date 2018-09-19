@@ -24,8 +24,65 @@
             <li><a href="#" id="side_bar_activator"><i class="material-icons">menu</i></a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/">Entrar</a></li>
+            <li><a href="#modal_login" class="modal-trigger">Entrar</a></li>
         </ul>
     </div>
 </nav>
 <a href="#" data-target="slide-out" class="sidenav-trigger hidden"><i id="teste" class="material-icons">menu</i></a>
+
+<!-- Modal Structure -->
+<div id="modal_login" class="modal">
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+    </div>
+    <div class="modal-content card center" style="margin: 0;">
+        <div class="card-tabs">
+            <ul class="tabs tabs-fixed-width">
+                <li class="tab"><a class="active" href="#tab_login">Entrar</a></li>
+                <li class="tab"><a href="#tab_newUser">Novo</a></li>
+            </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+            <div id="tab_login" class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" type="text" class="validate">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Entrar</a>
+                </div>
+                <div class="col s12" style="margin-top: 15px">
+                    <a class="waves-effect waves-light btn-large social google">
+                        <i class="fa fa-google"></i> Entrar com google</a>
+                </div>
+            </div>
+            <div id="tab_newUser" class="row">
+                <div class="input-field col s6">
+                    <input id="newUser_first_name" type="text" class="validate">
+                    <label for="newUser_first_name">Nome</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="newUser_last_name" type="text" class="validate">
+                    <label for="newUser_last_name">Sobrenome</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="newUser_email" type="email" type="text" class="validate">
+                    <label for="newUser_email">Email</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="newUser_password" type="password" class="validate">
+                    <label for="newUser_password">Password</label>
+                </div>
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light right" type="submit" onclick="saveNewUser()" name="action">Cadastrar
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
