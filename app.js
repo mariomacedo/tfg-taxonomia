@@ -11,6 +11,7 @@ const morgan = require("morgan");
 const viewRoutes = require("./routes/viewRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const taxonomiaRoutes = require("./routes/taxonomiaRoutes");
 
 const app = express();
 
@@ -61,6 +62,7 @@ mongoose.connect(
 app.use("", viewRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/taxonomia", taxonomiaRoutes);
 
 // create home route
 app.get("/", (req, res) => {
