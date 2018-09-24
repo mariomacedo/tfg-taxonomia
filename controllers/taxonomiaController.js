@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const treeify = require('treeify');
 
 const Taxonomia = require("../models/taxonomiaModel");
 
@@ -8,14 +9,16 @@ exports.taxonomia = (req, res, next) => {
 
 exports.raiz = (req, res, next) => {
   Taxonomia.find()
-    .select("name nivel")
     .exec()
     .then(docs => {
-      docs[0].getChildren(function(err, nodes) {
-        // users is an array of with the bob document
+      var args = {
+        fields: "_id name nivel bloco",
+        recursive:true
+      }
+      docs[0].getChildrenTree(args, function(err, nodes) {
         console.log(nodes);
+        res.status(200).json(nodes); 
       });
-      res.status(200).json(docs);
     })
     .catch(err => {
       console.log(err);

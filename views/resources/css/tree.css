@@ -43,20 +43,3 @@ svg {
   fill: #FFF;
   font-size: 14px;
 }
-
-/* Example-specific styles */
-.scaling-svg-container {
-  position: relative; 
-  height:0; 
-  width: 100%; 
-  padding: 0;
-  padding-bottom: 100%; 
-  /* over-ride this inline for aspect ratio other than square */
-}
-.scaling-svg {
-  position: absolute; 
-  height: 100%; 
-  width: 100%; 
-  left: 0; 
-  top:0;
-}

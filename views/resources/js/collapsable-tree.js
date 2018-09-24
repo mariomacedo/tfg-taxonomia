@@ -1,94 +1,84 @@
 var taxonomia = {
   name: "Taxonomia",
-  nivel: 0,
   bloco: "raiz",
   children: [
     {
       name: "Conceitual",
-      nivel: 1,
       bloco: "conceitual",
       children: [
-        { name: "Abordagem", nivel: 2, bloco: "conceitual" },
-        { name: "Tipo de Participação", nivel: 2, bloco: "conceitual" },
-        { name: "Engajamento", nivel: 2, bloco: "conceitual" },
-        { name: "Dados Abertos", nivel: 2, bloco: "conceitual" }
+        { name: "Abordagem", bloco: "conceitual" },
+        { name: "Tipo de Participação", bloco: "conceitual" },
+        { name: "Engajamento", bloco: "conceitual" },
+        { name: "Dados Abertos", bloco: "conceitual" }
       ]
     },
     {
       name: "Tecnologias",
-      nivel: 1,
       bloco: "tecnologia",
       children: [
-        { name: "Plataforma", nivel: 2, bloco: "tecnologia" },
-        { name: "Hardware", nivel: 2, bloco: "tecnologia" },
+        { name: "Plataforma", bloco: "tecnologia" },
+        { name: "Hardware", bloco: "tecnologia" },
         {
           name: "Desenvolvimento",
-          nivel: 2,
           bloco: "tecnologia",
           children: [
-            { name: "Banco de Dados", nivel: 3, bloco: "tecnologia" },
-            { name: "Servidor Web", nivel: 3, bloco: "tecnologia" },
-            { name: "Linguagem", nivel: 3, bloco: "tecnologia" },
-            { name: "Bibliotecas", nivel: 3, bloco: "tecnologia" },
-            { name: "API", nivel: 3, bloco: "tecnologia" }
+            { name: "Banco de Dados", bloco: "tecnologia" },
+            { name: "servidor Web", bloco: "tecnologia" },
+            { name: "Linguagem", bloco: "tecnologia" },
+            { name: "Bibliotecas", bloco: "tecnologia" },
+            { name: "API", bloco: "tecnologia" }
           ]
         }
       ]
     },
     {
       name: "Funcionalidades",
-      nivel: 1,
       bloco: "funcionalidade",
       children: [
         {
           name: "Visualização da Informação",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Técnica", nivel: 3, bloco: "funcionalidade" },
-            { name: "Informação", nivel: 3, bloco: "funcionalidade" }
+            { name: "Técnica", bloco: "funcionalidade" },
+            { name: "Informação", bloco: "funcionalidade" }
           ]
         },
         {
           name: "Coleta de Dados",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Tipo de Dado", nivel: 3, bloco: "funcionalidade" },
-            { name: "Estratégia", nivel: 3, bloco: "funcionalidade" },
+            { name: "Tipo de Dado", bloco: "funcionalidade" },
+            { name: "Estratégia", bloco: "funcionalidade" },
             {
               name: "Processamento de Dados",
-              nivel: 3,
               bloco: "funcionalidade"
             }
           ]
         },
-        { name: "Tipo de Informação", nivel: 2, bloco: "funcionalidade" },
+        { name: "Tipo de Informação", bloco: "funcionalidade" },
         {
           name: "Interação entre usuários",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Objetivo", nivel: 3, bloco: "funcionalidade" },
-            { name: "Técnica", nivel: 3, bloco: "funcionalidade" }
+            { name: "Objetivo", bloco: "funcionalidade" },
+            { name: "Técnica", bloco: "funcionalidade" }
           ]
         },
-        { name: "Moderação", nivel: 2, bloco: "funcionalidade" },
-        { name: "Direcionamento", nivel: 2, bloco: "funcionalidade" },
-        { name: "Autenticação", nivel: 2, bloco: "funcionalidade" }
+        { name: "Moderação", bloco: "funcionalidade" },
+        { name: "Direcionamento", bloco: "funcionalidade" },
+        { name: "Autenticação", bloco: "funcionalidade" }
       ]
     },
     {
       name: "Aspectos Gerais",
-      nivel: 1,
       bloco: "apecto",
       children: [
-        { name: "Área", nivel: 2, bloco: "apecto" },
-        { name: "Localização", nivel: 2, bloco: "apecto" },
-        { name: "Escopo", nivel: 2, bloco: "apecto" },
-        { name: "Idioma", nivel: 2, bloco: "apecto" },
-        { name: "Público Alvo", nivel: 2, bloco: "apecto" },
-        { name: "Criação", nivel: 2, bloco: "apecto" }
+        { name: "Área", bloco: "apecto" },
+        { name: "Localização", bloco: "apecto" },
+        { name: "Escopo", bloco: "apecto" },
+        { name: "Idioma", bloco: "apecto" },
+        { name: "Público Alvo", bloco: "apecto" },
+        { name: "Criação", bloco: "apecto" }
       ]
     }
   ]
@@ -157,9 +147,7 @@ function update(source) {
       toggle(d);
       update(d);
       // TODO: Insert data
-      if(!d.children){
-        console.log("Folha: " + d.name)
-      }
+      console.log(d);
     });
 
   nodeEnter

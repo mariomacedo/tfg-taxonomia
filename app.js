@@ -59,7 +59,12 @@ mongoose.connect(
   }
 );
 
+const adminRoutes = (req, res, next) => {
+  res.render("pages/adminTaxonomia", { user: req.user });
+};
+
 app.use("", viewRoutes);
+app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/taxonomia", taxonomiaRoutes);

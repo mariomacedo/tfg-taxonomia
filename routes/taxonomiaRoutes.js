@@ -12,4 +12,5 @@ router.get("/:nodeName", TaxonomiaController.getNode);
 router.post("/createNode", TaxonomiaController.createNode);
 
 router.post("/removeNode", TaxonomiaController.removeNode);
+
 module.exports = router;

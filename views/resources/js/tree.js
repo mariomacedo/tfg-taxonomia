@@ -1,122 +1,122 @@
-var root = {
+var taxonomia = {
   name: "Taxonomia",
-  nivel: 0,
   bloco: "raiz",
   children: [
     {
       name: "Conceitual",
-      nivel: 1,
       bloco: "conceitual",
       children: [
-        { name: "Abordagem", nivel: 2, bloco: "conceitual" },
-        { name: "Tipo de Participação", nivel: 2, bloco: "conceitual" },
-        { name: "Engajamento", nivel: 2, bloco: "conceitual" },
-        { name: "Dados Abertos", nivel: 2, bloco: "conceitual" }
+        { name: "Abordagem", bloco: "conceitual" },
+        { name: "Tipo de Participação", bloco: "conceitual" },
+        { name: "Engajamento", bloco: "conceitual" },
+        { name: "Dados Abertos", bloco: "conceitual" }
       ]
     },
     {
       name: "Tecnologias",
-      nivel: 1,
       bloco: "tecnologia",
       children: [
-        { name: "Plataforma", nivel: 2, bloco: "tecnologia" },
-        { name: "Hardware", nivel: 2, bloco: "tecnologia" },
+        { name: "Plataforma", bloco: "tecnologia" },
+        { name: "Hardware", bloco: "tecnologia" },
         {
           name: "Desenvolvimento",
-          nivel: 2,
           bloco: "tecnologia",
           children: [
-            { name: "Banco de Dados", nivel: 3, bloco: "tecnologia" },
-            { name: "servidor Web", nivel: 3, bloco: "tecnologia" },
-            { name: "Linguagem", nivel: 3, bloco: "tecnologia" },
-            { name: "Bibliotecas", nivel: 3, bloco: "tecnologia" },
-            { name: "API", nivel: 3, bloco: "tecnologia" }
+            { name: "Banco de Dados", bloco: "tecnologia" },
+            { name: "Servidor Web", bloco: "tecnologia" },
+            { name: "Linguagem", bloco: "tecnologia" },
+            { name: "Bibliotecas", bloco: "tecnologia" },
+            { name: "API", bloco: "tecnologia" }
           ]
         }
       ]
     },
     {
       name: "Funcionalidades",
-      nivel: 1,
       bloco: "funcionalidade",
       children: [
         {
           name: "Visualização da Informação",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Técnica", nivel: 3, bloco: "funcionalidade" },
-            { name: "Informação", nivel: 3, bloco: "funcionalidade" }
+            { name: "Técnica", bloco: "funcionalidade" },
+            { name: "Informação", bloco: "funcionalidade" }
           ]
         },
         {
           name: "Coleta de Dados",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Tipo de Dado", nivel: 3, bloco: "funcionalidade" },
-            { name: "Estratégia", nivel: 3, bloco: "funcionalidade" },
+            { name: "Tipo de Dado", bloco: "funcionalidade" },
+            { name: "Estratégia", bloco: "funcionalidade" },
             {
               name: "Processamento de Dados",
-              nivel: 3,
               bloco: "funcionalidade"
             }
           ]
         },
-        { name: "Tipo de Informação", nivel: 2, bloco: "funcionalidade" },
+        { name: "Tipo de Informação", bloco: "funcionalidade" },
         {
           name: "Interação entre usuários",
-          nivel: 2,
           bloco: "funcionalidade",
           children: [
-            { name: "Objetivo", nivel: 3, bloco: "funcionalidade" },
-            { name: "Técnica", nivel: 3, bloco: "funcionalidade" }
+            { name: "Objetivo", bloco: "funcionalidade" },
+            { name: "Técnica", bloco: "funcionalidade" }
           ]
         },
-        { name: "Moderação", nivel: 2, bloco: "funcionalidade" },
-        { name: "Direcionamento", nivel: 2, bloco: "funcionalidade" },
-        { name: "Autenticação", nivel: 2, bloco: "funcionalidade" }
+        { name: "Moderação", bloco: "funcionalidade" },
+        { name: "Direcionamento", bloco: "funcionalidade" },
+        { name: "Autenticação", bloco: "funcionalidade" }
       ]
     },
     {
       name: "Aspectos Gerais",
-      nivel: 1,
       bloco: "apecto",
       children: [
-        { name: "Área", nivel: 2, bloco: "apecto" },
-        { name: "Localização", nivel: 2, bloco: "apecto" },
-        { name: "Escopo", nivel: 2, bloco: "apecto" },
-        { name: "Idioma", nivel: 2, bloco: "apecto" },
-        { name: "Público Alvo", nivel: 2, bloco: "apecto" },
-        { name: "Criação", nivel: 2, bloco: "apecto" }
+        { name: "Área", bloco: "apecto" },
+        { name: "Localização", bloco: "apecto" },
+        { name: "Escopo", bloco: "apecto" },
+        { name: "Idioma", bloco: "apecto" },
+        { name: "Público Alvo", bloco: "apecto" },
+        { name: "Criação", bloco: "apecto" }
       ]
     }
   ]
 };
 
-function montaArvore() {
-  var diameter = 1060;
-
-  var tree = d3.layout
-    .tree()
-    .size([360, diameter / 2 - 90])
-    .separation(function(a, b) {
-      return (a.parent == b.parent ? 1 : 2) / a.depth;
-    });
-
-  var diagonal = d3.svg.diagonal.radial().projection(function(d) {
-    return [d.y, (d.x / 180) * Math.PI];
+var diameter = 1060;
+var tree = d3.layout
+  .tree()
+  .size([360, diameter / 2 - 90])
+  .separation(function(a, b) {
+    return (a.parent == b.parent ? 1 : 2) / a.depth;
   });
 
-  var svg = d3
-    .select("#taxonomy_tree")
-    .append("svg")
-    .attr("width", diameter + 100)
-    .attr("height", diameter + 100)
-    .append("g")
-    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+var diagonal = d3.svg.diagonal.radial().projection(function(d) {
+  return [d.y, (d.x / 180) * Math.PI];
+});
 
-  var nodes = tree.nodes(root),
+var svg = d3
+  .select("#taxonomy_tree")
+  .append("svg")
+  .attr("width", diameter + 100)
+  .attr("height", diameter + 100)
+  .append("g")
+  .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+function toggleAll(d) {
+  if (d.children) {
+    d.children.forEach(toggleAll);
+    toggle(d);
+  }
+}
+
+montaArvore(taxonomia);
+
+function montaArvore(source) {
+  var duration = d3.event && d3.event.altKey ? 5000 : 500;
+
+  var nodes = tree.nodes(source),
     links = tree.links(nodes);
 
   var link = svg
@@ -136,22 +136,29 @@ function montaArvore() {
       return d.bloco + " node";
     })
     .attr("transform", function(d) {
-      if (d.nivel == 0) {
+      if (d.depth == 0) {
         return "rotate(60.25)translate(30)";
       } else {
         return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
       }
     });
 
-  node.append("circle").attr("r", function(d) {
-    if (d.nivel == 0) {
-      return 50;
-    } else {
-      return 25 - d.nivel * 5;
-    }
-  });
-
-  // else if(d.bloco != 'apecto'){ return 0}
+  node
+    .append("circle")
+    .attr("r", function(d) {
+      if (d.depth == 0) {
+        return 50;
+      } else {
+        return 25 - d.depth * 5;
+      }
+    })
+    .on("click", function(d) {
+      // TODO: Insert data
+      var toastHTML =
+        '<span>'+ d.name+'</span><button class="btn-flat toast-action" onclick="dismissToast()">x</button>';
+      M.toast({ html: toastHTML });
+      console.log(d);
+    });
 
   node
     .append("text")
@@ -160,7 +167,7 @@ function montaArvore() {
       return d.x < 180 ? "start" : "end";
     })
     .attr("transform", function(d) {
-      if (d.nivel == 0) {
+      if (d.depth == 0) {
         return "rotate(-60)translate(-40)";
       } else {
         return d.x < 180 ? "translate(30)" : "rotate(180)translate(-35)";
@@ -168,9 +175,23 @@ function montaArvore() {
     })
     .text(function(d) {
       return d.name;
+    })
+    .on("click", function(d) {
+      // TODO: Insert data
+      toggle(d);
+      console.log(d);
     });
 
-  //if(d.bloco != 'apecto' && d.bloco != 'raiz'){ return } else{
-
   d3.select(self.frameElement).style("height", diameter - 150 + "px");
+}
+
+// Toggle children.
+function toggle(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
 }
