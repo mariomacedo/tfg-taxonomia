@@ -1,87 +1,7 @@
 var taxonomia = {
   name: "Taxonomia",
   bloco: "raiz",
-  children: [
-    {
-      name: "Conceitual",
-      bloco: "conceitual",
-      children: [
-        { name: "Abordagem", bloco: "conceitual" },
-        { name: "Tipo de Participação", bloco: "conceitual" },
-        { name: "Engajamento", bloco: "conceitual" },
-        { name: "Dados Abertos", bloco: "conceitual" }
-      ]
-    },
-    {
-      name: "Tecnologias",
-      bloco: "tecnologia",
-      children: [
-        { name: "Plataforma", bloco: "tecnologia" },
-        { name: "Hardware", bloco: "tecnologia" },
-        {
-          name: "Desenvolvimento",
-          bloco: "tecnologia",
-          children: [
-            { name: "Banco de Dados", bloco: "tecnologia" },
-            { name: "servidor Web", bloco: "tecnologia" },
-            { name: "Linguagem", bloco: "tecnologia" },
-            { name: "Bibliotecas", bloco: "tecnologia" },
-            { name: "API", bloco: "tecnologia" }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Funcionalidades",
-      bloco: "funcionalidade",
-      children: [
-        {
-          name: "Visualização da Informação",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Técnica", bloco: "funcionalidade" },
-            { name: "Informação", bloco: "funcionalidade" }
-          ]
-        },
-        {
-          name: "Coleta de Dados",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Tipo de Dado", bloco: "funcionalidade" },
-            { name: "Estratégia", bloco: "funcionalidade" },
-            {
-              name: "Processamento de Dados",
-              bloco: "funcionalidade"
-            }
-          ]
-        },
-        { name: "Tipo de Informação", bloco: "funcionalidade" },
-        {
-          name: "Interação entre usuários",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Objetivo", bloco: "funcionalidade" },
-            { name: "Técnica", bloco: "funcionalidade" }
-          ]
-        },
-        { name: "Moderação", bloco: "funcionalidade" },
-        { name: "Direcionamento", bloco: "funcionalidade" },
-        { name: "Autenticação", bloco: "funcionalidade" }
-      ]
-    },
-    {
-      name: "Aspectos Gerais",
-      bloco: "apecto",
-      children: [
-        { name: "Área", bloco: "apecto" },
-        { name: "Localização", bloco: "apecto" },
-        { name: "Escopo", bloco: "apecto" },
-        { name: "Idioma", bloco: "apecto" },
-        { name: "Público Alvo", bloco: "apecto" },
-        { name: "Criação", bloco: "apecto" }
-      ]
-    }
-  ]
+  children: []
 };
 
 var m = [20, 120, 20, 120],
@@ -90,7 +10,7 @@ var m = [20, 120, 20, 120],
   i = 0,
   root = {};
 
-var tree = d3.layout.tree().size([h, w]);
+var treeHorizontal = d3.layout.tree().size([h, w]);
 
 var diagonal = d3.svg.diagonal().projection(function(d) {
   return [d.y, d.x];
@@ -108,22 +28,23 @@ root = taxonomia;
 root.x0 = h / 2;
 root.y0 = 0;
 
-function toggleAll(d) {
-  if (d.children) {
-    d.children.forEach(toggleAll);
-    toggle(d);
-  }
-}
-
 // Initialize the root to show its children.
 //root.children.forEach(toggleAll);
-update(root);
+
+function buscaDados() {
+  $.get("/taxonomia/raiz", json => {
+    root.children = json;
+    update(root);
+  });
+}
+
+buscaDados();
 
 function update(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
   // Compute the new tree layout.
-  var nodes = tree.nodes(root).reverse();
+  var nodes = treeHorizontal.nodes(root).reverse();
 
   // Normalize for fixed-depth.
   nodes.forEach(function(d) {
@@ -203,9 +124,11 @@ function update(source) {
   nodeExit.select("text").style("fill-opacity", 1e-6);
 
   // Update the links…
-  var link = vis.selectAll("path.link").data(tree.links(nodes), function(d) {
-    return d.target.id;
-  });
+  var link = vis
+    .selectAll("path.link")
+    .data(treeHorizontal.links(nodes), function(d) {
+      return d.target.id;
+    });
 
   // Enter any new links at the parent's previous position.
   link
@@ -242,15 +165,4 @@ function update(source) {
     d.x0 = d.x;
     d.y0 = d.y;
   });
-}
-
-// Toggle children.
-function toggle(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
 }

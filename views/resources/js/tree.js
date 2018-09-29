@@ -1,98 +1,19 @@
 var taxonomia = {
   name: "Taxonomia",
   bloco: "raiz",
-  children: [
-    {
-      name: "Conceitual",
-      bloco: "conceitual",
-      children: [
-        { name: "Abordagem", bloco: "conceitual" },
-        { name: "Tipo de Participação", bloco: "conceitual" },
-        { name: "Engajamento", bloco: "conceitual" },
-        { name: "Dados Abertos", bloco: "conceitual" }
-      ]
-    },
-    {
-      name: "Tecnologias",
-      bloco: "tecnologia",
-      children: [
-        { name: "Plataforma", bloco: "tecnologia" },
-        { name: "Hardware", bloco: "tecnologia" },
-        {
-          name: "Desenvolvimento",
-          bloco: "tecnologia",
-          children: [
-            { name: "Banco de Dados", bloco: "tecnologia" },
-            { name: "Servidor Web", bloco: "tecnologia" },
-            { name: "Linguagem", bloco: "tecnologia" },
-            { name: "Bibliotecas", bloco: "tecnologia" },
-            { name: "API", bloco: "tecnologia" }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Funcionalidades",
-      bloco: "funcionalidade",
-      children: [
-        {
-          name: "Visualização da Informação",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Técnica", bloco: "funcionalidade" },
-            { name: "Informação", bloco: "funcionalidade" }
-          ]
-        },
-        {
-          name: "Coleta de Dados",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Tipo de Dado", bloco: "funcionalidade" },
-            { name: "Estratégia", bloco: "funcionalidade" },
-            {
-              name: "Processamento de Dados",
-              bloco: "funcionalidade"
-            }
-          ]
-        },
-        { name: "Tipo de Informação", bloco: "funcionalidade" },
-        {
-          name: "Interação entre usuários",
-          bloco: "funcionalidade",
-          children: [
-            { name: "Objetivo", bloco: "funcionalidade" },
-            { name: "Técnica", bloco: "funcionalidade" }
-          ]
-        },
-        { name: "Moderação", bloco: "funcionalidade" },
-        { name: "Direcionamento", bloco: "funcionalidade" },
-        { name: "Autenticação", bloco: "funcionalidade" }
-      ]
-    },
-    {
-      name: "Aspectos Gerais",
-      bloco: "apecto",
-      children: [
-        { name: "Área", bloco: "apecto" },
-        { name: "Localização", bloco: "apecto" },
-        { name: "Escopo", bloco: "apecto" },
-        { name: "Idioma", bloco: "apecto" },
-        { name: "Público Alvo", bloco: "apecto" },
-        { name: "Criação", bloco: "apecto" }
-      ]
-    }
-  ]
+  nivel: 0,
+  children: []
 };
 
-var diameter = 1060;
-var tree = d3.layout
+var diameter = 1080;
+var treeRadial = d3.layout
   .tree()
   .size([360, diameter / 2 - 90])
   .separation(function(a, b) {
     return (a.parent == b.parent ? 1 : 2) / a.depth;
   });
 
-var diagonal = d3.svg.diagonal.radial().projection(function(d) {
+var diagonalTreeRadial = d3.svg.diagonal.radial().projection(function(d) {
   return [d.y, (d.x / 180) * Math.PI];
 });
 
@@ -102,7 +23,10 @@ var svg = d3
   .attr("width", diameter + 100)
   .attr("height", diameter + 100)
   .append("g")
-  .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+  .attr(
+    "transform",
+    "translate(" + (diameter / 2 + 100) + "," + (diameter / 2 - 5) + ")"
+  );
 
 function toggleAll(d) {
   if (d.children) {
@@ -111,13 +35,20 @@ function toggleAll(d) {
   }
 }
 
-montaArvore(taxonomia);
+function buscaDadosAndMontaArvore() {
+  $.get("/taxonomia/raiz", json => {
+    taxonomia.children = json;
+    montaArvore(taxonomia);
+  });
+}
+//TODO: blockui LOADING
+buscaDadosAndMontaArvore();
 
 function montaArvore(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
-  var nodes = tree.nodes(source),
-    links = tree.links(nodes);
+  var nodes = treeRadial.nodes(source),
+    links = treeRadial.links(nodes);
 
   var link = svg
     .selectAll(".link")
@@ -125,7 +56,7 @@ function montaArvore(source) {
     .enter()
     .append("path")
     .attr("class", "link")
-    .attr("d", diagonal);
+    .attr("d", diagonalTreeRadial);
 
   var node = svg
     .selectAll(".node")
@@ -155,7 +86,9 @@ function montaArvore(source) {
     .on("click", function(d) {
       // TODO: Insert data
       var toastHTML =
-        '<span>'+ d.name+'</span><button class="btn-flat toast-action" onclick="dismissToast()">x</button>';
+        "<span>" +
+        d.name +
+        '</span><button class="btn-flat toast-action" onclick="dismissToast()">x</button>';
       M.toast({ html: toastHTML });
       console.log(d);
     });

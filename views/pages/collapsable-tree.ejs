@@ -8,18 +8,18 @@
     <script src="http://mbostock.github.io/d3/talk/20111018/d3/d3.js"></script>
     <script src="http://mbostock.github.io/d3/talk/20111018/d3/d3.layout.js"></script>
     <style type="text/css">
-        .node circle {
+        #body.node circle {
             cursor: pointer;
             fill: #fff;
             stroke: steelblue;
             stroke-width: 1.5px;
         }
 
-        .node text {
+        #body.node text {
             font-size: 11px;
         }
 
-        path.link {
+        #body > path.link {
             fill: none;
             stroke: #ccc;
             stroke-width: 1.5px;
@@ -33,7 +33,8 @@
         <div class="row container">
             <div class="col s12" id="body">
             </div>
-            <script src="js/collapsable-tree.js"></script>
+        </div>
+        <script src="js/collapsable-tree.js"></script>
     </main>
 </body>
 
