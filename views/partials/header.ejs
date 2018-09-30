@@ -1,7 +1,6 @@
 <!-- SideBar -->
 <ul id="slide-out" class="sidenav">
     <li>
-
         <div class="user-view">
             <div class="background">
                 <img src="/img/background.png">
@@ -36,10 +35,11 @@
         <a href="#" class="brand-logo center">Taxonomia</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="#" id="side_bar_activator"><i class="material-icons">menu</i></a></li>
+            <li><a href="#modal_new" class="modal-trigger">Nova Ferramenta</a></li>
             <li>
                 <div class="input-field">
-                    <input type="text" id="autocomplete-input" class="autocomplete">
                     <label for="autocomplete-input">Buscar Ferramenta</label>
+                    <input type="text" id="autocomplete-input" class="autocomplete">
                 </div>
             </li>
         </ul>
@@ -53,6 +53,14 @@
     </div>
 </nav>
 <a href="#" data-target="slide-out" class="sidenav-trigger hidden"><i id="teste" class="material-icons">menu</i></a>
+<div id="modal_new" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <% include ../partials/novaFerramenta %>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+    </div>
+</div>
 
 <!-- Modal Structure -->
 <div id="modal_login" class="modal">
@@ -106,6 +114,21 @@
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cover center" id="loader" style="display:none">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
             </div>
         </div>
     </div>

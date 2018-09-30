@@ -5,12 +5,32 @@
     <% include ../partials/head %>
 </head>
 
+<script>
+    $(document).ready(() => {
+        buscarFerramentas();
+    });
+</script>
+
 <body>
     <main>
         <% include ../partials/header %>
         <div class="row container">
-            <div class="col s12 m12 l12 center">
-                <form id="form_ferramenta" action="#">
+            <div class="col s12 m12 l12">
+                <div id="show_ferramentas">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Abordagem</th>
+                            </tr>
+                        </thead>
+                        <tbody />
+                    </table>
+                </div>
+            </div>
+
+            <div class="col s12 m12 l12 center" style="display: none">
+                <form id="form_test" action="/ferramenta/new" method="POST">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <h3>Nova Ferramenta</h3>
@@ -20,338 +40,31 @@
                         </div>
                         <!-- TODO AUTOCOMPLETE -->
                         <div class="col s12 m12 l6 input-field">
-                            <input id="name" type="text" class="validate">
-                            <label for="name">Nome</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <input id="autoria" type="text" class="validate">
-                            <label for="autoria">Autoria</label>
+                            <input id="nameFerramenta" name="nameFerramenta" type="text" class="validate">
+                            <label for="nameFerramenta">Nome</label>
                         </div>
                         <div class="col s12 m6 l6 input-field">
                             <h6>Tipo de Abordagem</h6>
                             <!-- $('input[name=group_abordagem]:checked').attr('id') -->
                             <p>
                                 <label>
-                                    <input name="group_abordagem" type="radio" id="abordagem_horizontal" />
+                                    <input name="abordagem" type="radio" value="horizontal" />
                                     <span>Horizontal</span>
                                 </label>
                                 <label>
-                                    <input name="group_abordagem" type="radio" id="abordagem_vertical" />
+                                    <input name="abordagem" type="radio" value="vertical" />
                                     <span>Vertical</span>
                                 </label>
                                 <label>
-                                    <input name="group_abordagem" type="radio" id="abordagem_ambos" />
+                                    <input name="abordagem" type="radio" value="ambos" />
                                     <span>Ambos</span>
                                 </label>
                             </p>
                         </div>
-                        <div class="col s12 m6 l6">
-                            <div class="row">
-                                <div class="col s12 m12 l12">
-                                    <h6>Engajamento</h6>
-                                </div>
-                                <div class="col s12 m6 l6 input-field">
-                                    <select id="select_tecnica">
-                                        <option value="null">Selecione</option>
-                                        <option value="1">Gamificação</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
-                                    <label>Técnica</label>
-                                </div>
-                                <div class="col s12 m6 l6 input-field">
-                                    <input id="estrategia" type="text" class="validate">
-                                    <label for="estrategia">Estratégia</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h5>Domínio</h5>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_area">
-                                <option value="null">Selecione</option>
-                                <option value="1">Orçamento Participativo</option>
-                                <option value="2">Geral</option>
-                                <option value="3">Planejamento Urbano</option>
-                            </select>
-                            <label>Área</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <input id="localizacao" type="text" class="validate">
-                            <label for="localizacao">Localização</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select>
-                                <option value="null">Selecione</option>
-                                <option value="1">Municipal</option>
-                                <option value="2">Estadual</option>
-                                <option value="3">Federal</option>
-                                <option value="4">Regional</option>
-                            </select>
-                            <label>Esfera Governamental</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_idioma">
-                                <option value="null">Selecione</option>
-                                <option value="1">Inglês</option>
-                            </select>
-                            <label>Idioma</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <input id="publico_alvo" type="text" class="validate">
-                            <label for="publico_alvo">Público Alvo</label>
-                        </div>
-
-                        <!-- $('input[name=group_tipo_participacao]:checked').attr('id') -->
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Tipo de Participação</h6>
-                            <p>
-                                <label>
-                                    <input name="group_tipo_participacao" type="radio" id="participacao_voluntaria" />
-                                    <span>Voluntária</span>
-                                </label>
-                                <label>
-                                    <input name="group_tipo_participacao" type="radio" id="participacao_involuntaria" />
-                                    <span>Involuntária</span>
-                                </label>
-                                <label>
-                                    <input name="group_tipo_participacao" type="radio" id="participacao_ambos" />
-                                    <span>Ambos</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h5>Tecnologias</h5>
-                        </div>
-                        <!-- $('input[name=group_plataforma]:checked').attr('id') -->
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Plataforma</h6>
-                            <p>
-                                <label>
-                                    <input name="group_plataforma" type="radio" id="plataforma_mobile" />
-                                    <span>Mobile</span>
-                                </label>
-                                <label>
-                                    <input name="group_plataforma" type="radio" id="plataforma_web" />
-                                    <span>Web</span>
-                                </label>
-                                <label>
-                                    <input name="group_plataforma" type="radio" id="plataforma_ambos" />
-                                    <span>Ambos</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_hardware">
-                                <option value="null">Selecione</option>
-                                <option value="1">Arduíno</option>
-                            </select>
-                            <label>Hardware</label>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h6>Desenvolvimento</h6>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_banco_de_dados">
-                                <option value="null">Selecione</option>
-                                <option value="1">PostgreSQL</option>
-                                <option value="2">MySQL</option>
-                            </select>
-                            <label>Banco de Dados</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_servidor">
-                                <option value="null">Selecione</option>
-                                <option value="1">Apache</option>
-                                <option value="2">Nginx</option>
-                            </select>
-                            <label>Servidor</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Linguagens de Programação</h6>
-                            <p id="checkboxes_linguagem">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Java</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Javascript</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Bibliotecas</h6>
-                            <p id="checkboxes_bibliotecas">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>jQuery</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>D3.js</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>API</h6>
-                            <p id="checkboxes_api">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Geokey</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Placeholder</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h5>Funcionalidades</h5>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Dados Abertos</h6>
-                            <p>
-                                <label>
-                                    <input name="group_dados_abertos" type="radio" id="dados_abertos_consome" />
-                                    <span>Consome</span>
-                                </label>
-                                <label>
-                                    <input name="group_dados_abertos" type="radio" id="dados_abertos_disponibiliza" />
-                                    <span>Disponibiliza</span>
-                                </label>
-                                <label>
-                                    <input name="group_dados_abertos" type="radio" id="dados_abertos_ambos" />
-                                    <span>Ambos</span>
-                                </label>
-                                <label>
-                                    <input name="group_dados_abertos" type="radio" id="dados_abertos_nenhuma" />
-                                    <span>Nenhuma das Opções</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_tipo_informacao">
-                                <option value="null">Selecione</option>
-                                <option value="1">Problemas</option>
-                                <option value="2">Petições</option>
-                            </select>
-                            <label>Tipo de Informação</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_moderacao">
-                                <option value="null">Selecione</option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Usuário Responsável</option>
-                            </select>
-                            <label>Moderação</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_relacionamento">
-                                <option value="null">Selecione</option>
-                                <option value="true">Sim</option>
-                                <option value="false">Não</option>
-                            </select>
-                            <label>Relacionamento (Poder Público)</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <select id="select_autenticacao">
-                                <option value="null">Selecione</option>
-                                <option value="true">Sim</option>
-                                <option value="false">Não</option>
-                            </select>
-                            <label>Autenticação</label>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h6>Visualização de Informação</h6>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Técnica</h6>
-                            <p id="checkboxes_tecnica_infovis">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Mapa</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Mapa de Calor</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Gráfico de Pizza</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m12 l6 input-field">
-                            <input id="infovis_informacao" type="text" class="validate">
-                            <label for="infovis_informacao">Informação</label>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h6>Coleta de Dados</h6>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Tipo de Dado</h6>
-                            <p id="checkboxes_tipo_dado">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Vídeo</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Imagem</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Localização</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Estratégia</h6>
-                            <p id="checkboxes_coleta_estrategia">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Formulários</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Apps</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Processamento</h6>
-                            <p id="checkboxes_processamento">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Mineração de Dados</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>OLAP</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h6>Interação Entre Usuários</h6>
-                        </div>
-                        <div class="col s12 m12 l6 input-field">
-                            <input id="objetivo" type="text" class="validate">
-                            <label for="objetivo">Objetivo</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Técnica</h6>
-                            <p id="checkboxes_interacao_tecnica">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Voto</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Discussão</span>
-                                </label>
-                            </p>
+                        <div class="col s12 m12 l6">
+                            <button class="btn" type="submit">
+                                Salvar
+                            </button>
                         </div>
                     </div>
                 </form>

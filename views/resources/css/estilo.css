@@ -16,12 +16,21 @@ nav,
   background-color: var(--main-color, black);
 }
 
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  background: black;
+  opacity: 0.3;
+}
+
 /* End Materialize CSS*/
 
 /* My CSS*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 :root {
-    font-family: Open Sans, sans-serif;;
+  font-family: Open Sans, sans-serif;
   --main-color: #212121;
 }
 

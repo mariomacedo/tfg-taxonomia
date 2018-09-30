@@ -21,3 +21,32 @@ function toggle(d) {
     d._children = null;
   }
 }
+
+function buscarFerramentas() {
+  var blockUi = $("#loader");
+  const tr = "<tr>",
+    bTr = "</tr>",
+    td = "<td>",
+    bTd = "</td>";
+  var container = $("#show_ferramentas tbody");
+  blockUi.show();
+  $.get("/ferramenta/all", response => {
+    var autocomplete = {};
+    response.ferramentas.forEach(f => {
+      autocomplete[f.name] = null;
+      var toAppend = tr + td + f.name + bTd + td + f.abordagem + bTd + bTr;
+      container.append(toAppend);
+    });
+    $("input.autocomplete").autocomplete({
+      data: autocomplete,
+      onAutocomplete: function(val) {
+        // Callback function when value is autcompleted.
+        console.log(val);
+        $.get("/ferramenta/" + val, response => {
+          alert(JSON.stringify(response));
+        });
+      }
+    });
+    blockUi.hide();
+  });
+}
