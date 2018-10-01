@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const treeify = require('treeify');
+const treeify = require("treeify");
 
 const Taxonomia = require("../models/taxonomiaModel");
 
@@ -13,11 +13,11 @@ exports.raiz = (req, res, next) => {
     .then(docs => {
       var args = {
         fields: "_id name nivel bloco",
-        recursive:true
-      }
+        recursive: true
+      };
       docs[0].getChildrenTree(args, function(err, nodes) {
         console.log(nodes);
-        res.status(200).json(nodes); 
+        res.status(200).json(nodes);
       });
     })
     .catch(err => {
@@ -33,9 +33,13 @@ exports.getNode = (req, res, next) => {
   Taxonomia.find({ name: req.params.nodeName })
     .exec()
     .then(result => {
-      res.status(200).json({
-        count: result.length,
-        nodes: result
+      var args = {
+        fields: "_id name nivel bloco",
+        recursive: true
+      };
+      result[0].getChildrenTree(args, function(err, nodes) {
+        console.log(nodes);
+        res.status(200).json(result);
       });
     })
     .catch(err => {

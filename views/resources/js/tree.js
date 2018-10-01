@@ -5,29 +5,6 @@ var taxonomia = {
   children: []
 };
 
-var diameter = 1080;
-var treeRadial = d3.layout
-  .tree()
-  .size([360, diameter / 2 - 90])
-  .separation(function(a, b) {
-    return (a.parent == b.parent ? 1 : 2) / a.depth;
-  });
-
-var diagonalTreeRadial = d3.svg.diagonal.radial().projection(function(d) {
-  return [d.y, (d.x / 180) * Math.PI];
-});
-
-var svg = d3
-  .select("#taxonomy_tree")
-  .append("svg")
-  .attr("width", diameter + 100)
-  .attr("height", diameter + 100)
-  .append("g")
-  .attr(
-    "transform",
-    "translate(" + (diameter / 2 + 100) + "," + (diameter / 2 - 5) + ")"
-  );
-
 function toggleAll(d) {
   if (d.children) {
     d.children.forEach(toggleAll);
@@ -35,16 +12,38 @@ function toggleAll(d) {
   }
 }
 
-function buscaDadosAndMontaArvore() {
-  $.get("/taxonomia/raiz", json => {
+function buscaDadosAndMontaArvore(nodeName) {
+  $.get("/taxonomia/" + nodeName, json => {
     taxonomia.children = json;
     montaArvore(taxonomia);
   });
 }
 //TODO: blockui LOADING
-buscaDadosAndMontaArvore();
+buscaDadosAndMontaArvore("raiz");
 
 function montaArvore(source) {
+  var diameter = 1080;
+  var treeRadial = d3.layout
+    .tree()
+    .size([360, diameter / 2 - 90])
+    .separation(function(a, b) {
+      return (a.parent == b.parent ? 1 : 2) / a.depth;
+    });
+
+  var diagonalTreeRadial = d3.svg.diagonal.radial().projection(function(d) {
+    return [d.y, (d.x / 180) * Math.PI];
+  });
+
+  var svg = d3
+    .select("#taxonomy_tree")
+    .append("svg")
+    .attr("width", diameter + 100)
+    .attr("height", diameter + 100)
+    .append("g")
+    .attr(
+      "transform",
+      "translate(" + (diameter / 2 + 100) + "," + (diameter / 2 - 5) + ")"
+    );
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
   var nodes = treeRadial.nodes(source),
@@ -85,12 +84,12 @@ function montaArvore(source) {
     })
     .on("click", function(d) {
       // TODO: Insert data
+      buscaFerramentaByNome(d.name);
       var toastHTML =
         "<span>" +
         d.name +
         '</span><button class="btn-flat toast-action" onclick="dismissToast()">x</button>';
       M.toast({ html: toastHTML });
-      console.log(d);
     });
 
   node
@@ -112,7 +111,6 @@ function montaArvore(source) {
     .on("click", function(d) {
       // TODO: Insert data
       toggle(d);
-      console.log(d);
     });
 
   d3.select(self.frameElement).style("height", diameter - 150 + "px");

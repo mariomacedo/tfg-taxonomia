@@ -50,3 +50,26 @@ function buscarFerramentas() {
     blockUi.hide();
   });
 }
+
+function buscaFerramentaByNome(nome) {
+  $.get("/valor/" + nome.toLowerCase(), response => {
+    const ul = $(".collection.with-header");
+    ul.show();
+    ul.empty();
+    const header = '<li class="collection-header"><h4>' + nome + "</h4></li>";
+    ul.append(header);
+    if (response.length > 0) {
+      response[0].valores.forEach(v => {
+        var li =
+          '<li class="collection-item"><div>' +
+          v +
+          '<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>';
+        ul.append(li);
+      });
+    } else {
+      var liEmpty =
+        '<li class="collection-item">Não há valor para a classe selecionada. </li>';
+      ul.append(liEmpty);
+    }
+  });
+}

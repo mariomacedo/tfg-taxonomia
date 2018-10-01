@@ -13,6 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taxonomiaRoutes = require("./routes/taxonomiaRoutes");
 const ferramentaRoutes = require("./routes/ferramentaRoutes");
+const valorRoures = require("./routes/valorRoutes");
 
 const app = express();
 
@@ -70,6 +71,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/taxonomia", taxonomiaRoutes);
 app.use("/ferramenta", ferramentaRoutes);
+app.use("/valor", valorRoures);
 
 
 // create home route

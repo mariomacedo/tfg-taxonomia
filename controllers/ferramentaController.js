@@ -1,6 +1,8 @@
+const express = require("express");
 const mongoose = require("mongoose");
 
 const Ferramenta = require("../models/ferramentaModel");
+const Valores = require("../models/valoresModel");
 
 exports.findAll = (req, res, next) => {
   Ferramenta.find()
@@ -22,18 +24,67 @@ exports.findAll = (req, res, next) => {
 };
 
 exports.createFerramenta = (req, res, next) => {
-  console.log(req.body);
-  const node = new Ferramenta({
-    _id: new mongoose.Types.ObjectId(),
-    name: req.body.nameFerramenta,
-    abordagem: req.body.abordagem
+  const newFerramenta = new Ferramenta({
+    _id: new mongoose.Types.ObjectId()
   });
-  node
+
+  Object.keys(req.body).forEach(function(prop) {
+    const newValor = new Valores({
+      _id: new mongoose.Types.ObjectId(),
+      label: prop,
+      valores: req.body[prop]
+    });
+    newFerramenta[prop] = req.body[prop];
+
+    Valores.find({ label: prop })
+      .exec()
+      .then(result => {
+        if (result.length > 0 && !result.includes(req.body[prop])) {
+          console.log(result[0] + "@@@@@@@@@");
+          Valores.updateOne(
+            { label: prop },
+            { $push: { valores: [req.body[prop]] } }
+          )
+            .then(updated => {
+              console.log("Succes Update");
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({
+                error: err,
+                message: err.message
+              });
+            });
+        } else {
+          newValor
+            .save()
+            .then(novo => {
+              console.log("VALOR NOVO");
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({
+                error: err,
+                message: err.message
+              });
+            });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+          message: err.message
+        });
+      });
+  });
+
+  newFerramenta
     .save()
     .then(result => {
-      res.status(201).render("pages/home", {
-        user: req.user,
-        message: "Ferramenta Salva Com Sucesso!"
+      res.status(200).json({
+        msg: "Ferramenta Adicionada com sucesso",
+        ferramenta: result
       });
     })
     .catch(err => {
@@ -78,9 +129,7 @@ exports.findByName = (req, res, next) => {
   Ferramenta.find({ name: req.params.name })
     .exec()
     .then(result => {
-      res.status(200).json({
-        ferramenta: result
-      });
+      res.status(200).json(result);
     })
     .catch(err => {
       console.log(err);
