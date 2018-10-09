@@ -5,71 +5,9 @@
     <% include ../partials/head %>
 </head>
 
-<script>
-    $(document).ready(() => {
-        buscarFerramentas();
-    });
-</script>
-
 <body>
     <main>
         <% include ../partials/header %>
-        <div class="row container">
-            <div class="col s12 m12 l12">
-                <div id="show_ferramentas">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Abordagem</th>
-                            </tr>
-                        </thead>
-                        <tbody />
-                    </table>
-                </div>
-            </div>
-
-            <div class="col s12 m12 l12 center">
-                <form id="form_test" action="/ferramenta/new" method="POST">
-                    <div class="row">
-                        <div class="col s12 m12 l12">
-                            <h3>Nova Ferramenta</h3>
-                        </div>
-                        <div class="col s12 m12 l12">
-                            <h5>Sustentação</h5>
-                        </div>
-                        <!-- TODO AUTOCOMPLETE -->
-                        <div class="col s12 m12 l6 input-field">
-                            <input name="name" type="text" class="validate">
-                            <label for="name">Nome</label>
-                        </div>
-                        <div class="col s12 m6 l6 input-field">
-                            <h6>Tipo de Abordagem</h6>
-                            <!-- $('input[name=group_abordagem]:checked').attr('id') -->
-                            <p>
-                                <label>
-                                    <input name="abordagem" type="radio" value="Horizontal" />
-                                    <span>Horizontal</span>
-                                </label>
-                                <label>
-                                    <input name="abordagem" type="radio" value="Vertical" />
-                                    <span>Vertical</span>
-                                </label>
-                                <label>
-                                    <input name="abordagem" type="radio" value="Ambos" />
-                                    <span>Ambos</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="col s12 m12 l6">
-                            <button class="btn" type="submit">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
     </main>
 </body>
 <% include ../partials/footer %>

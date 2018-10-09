@@ -13,4 +13,6 @@ router.post("/createNode", TaxonomiaController.createNode);
 
 router.post("/removeNode", TaxonomiaController.removeNode);
 
+router.post("/edit", TaxonomiaController.editNode);
+
 module.exports = router;

@@ -73,7 +73,6 @@ app.use("/taxonomia", taxonomiaRoutes);
 app.use("/ferramenta", ferramentaRoutes);
 app.use("/valor", valorRoures);
 
-
 // create home route
 app.get("/", (req, res) => {
   res.render("pages/home", { user: req.user });

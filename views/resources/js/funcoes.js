@@ -22,6 +22,30 @@ function toggle(d) {
   }
 }
 
+function buscarValores() {
+  $.get("valor/autocomplete/all", function(response) {
+    response.forEach(l => {
+      if ($("#" + l.label).prop("nodeName") == "INPUT") {
+        var autocomplete = {};
+        l.valores.forEach(v => {
+          autocomplete[v] = null;
+        });
+        $("#" + l.label).autocomplete({
+          data: autocomplete
+        });
+      } else if ($("#" + l.label).prop("nodeName") == "SELECT") {
+        var select = $("#" + l.label);
+        l.valores.forEach(v => {
+          var opt = $("<option />");
+          opt.val(v).text(v);
+          select.append(opt);
+        });
+        select.formSelect();
+      }
+    });
+  });
+}
+
 function buscarFerramentas() {
   var blockUi = $("#loader");
   const tr = "<tr>",
@@ -37,7 +61,7 @@ function buscarFerramentas() {
       var toAppend = tr + td + f.name + bTd + td + f.abordagem + bTd + bTr;
       container.append(toAppend);
     });
-    $("input.autocomplete").autocomplete({
+    $("#buscar-ferramenta-autocomplete").autocomplete({
       data: autocomplete,
       onAutocomplete: function(val) {
         // Callback function when value is autcompleted.
@@ -47,16 +71,20 @@ function buscarFerramentas() {
         });
       }
     });
+    $("#name").autocomplete({
+      data: autocomplete
+    });
     blockUi.hide();
   });
 }
 
-function buscaFerramentaByNome(nome) {
-  $.get("/valor/" + nome.toLowerCase(), response => {
+function buscaFerramentaById(id) {
+  $.get("/valor/" + id, response => {
+    var label = response[0].label.toUpperCase();
     const ul = $(".collection.with-header");
     ul.show();
     ul.empty();
-    const header = '<li class="collection-header"><h4>' + nome + "</h4></li>";
+    const header = '<li class="collection-header"><h4>' + label + "</h4></li>";
     ul.append(header);
     if (response.length > 0) {
       response[0].valores.forEach(v => {

@@ -1,4 +1,5 @@
 var taxonomia = {
+  id: "taxonomia",
   name: "Taxonomia",
   bloco: "raiz",
   nivel: 0,
@@ -84,7 +85,7 @@ function montaArvore(source) {
     })
     .on("click", function(d) {
       // TODO: Insert data
-      buscaFerramentaByNome(d.name);
+      buscaFerramentaById(d.id);
       var toastHTML =
         "<span>" +
         d.name +

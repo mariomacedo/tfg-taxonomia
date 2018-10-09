@@ -11,4 +11,6 @@ router.get("/all", FerramentaController.findAll);
 
 router.get("/:name", FerramentaController.findByName);
 
+router.post("/findByValor", FerramentaController.findByValor);
+
 module.exports = router;

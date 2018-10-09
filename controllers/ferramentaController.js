@@ -34,27 +34,39 @@ exports.createFerramenta = (req, res, next) => {
       label: prop,
       valores: req.body[prop]
     });
-    newFerramenta[prop] = req.body[prop];
+
+    if (req.body[prop] != "null" && req.body[prop] != "") {
+      newFerramenta[prop] = req.body[prop];
+    }
 
     Valores.find({ label: prop })
       .exec()
       .then(result => {
-        if (result.length > 0 && !result.includes(req.body[prop])) {
-          console.log(result[0] + "@@@@@@@@@");
-          Valores.updateOne(
-            { label: prop },
-            { $push: { valores: [req.body[prop]] } }
-          )
-            .then(updated => {
-              console.log("Succes Update");
-            })
-            .catch(err => {
-              console.log(err);
-              res.status(500).json({
-                error: err,
-                message: err.message
+        if (result.length > 0) {
+          var encontrado = true;
+          for (var i = 0; i < result[0]["valores"].length; i++) {
+            if (result[0]["valores"][i] == req.body[prop]) {
+              encontrado = false;
+            }
+          }
+          if (encontrado) {
+            Valores.updateOne(
+              { label: prop },
+              { $push: { valores: [req.body[prop]] } }
+            )
+              .then(updated => {
+                console.log("Succes Update");
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  error: err,
+                  message: err.message
+                });
               });
-            });
+          } else {
+            next;
+          }
         } else {
           newValor
             .save()
@@ -103,10 +115,6 @@ exports.findAllByFilter = (req, res, next) => {
       filters.$or.push(req.body[key]);
     }
   }
-  for (const ops of req.body) {
-    console.log(ops);
-  }
-
   Ferramenta.find(filters)
     .exec()
     .then(result => {
@@ -130,6 +138,27 @@ exports.findByName = (req, res, next) => {
     .exec()
     .then(result => {
       res.status(200).json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+        message: err.message
+      });
+    });
+};
+
+exports.findByValor = (req, res, next) => {
+  const filters = { $or: [] };
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      filters.$or.push(req.body[key]);
+    }
+  }
+  Ferramenta.find(filters)
+    .exec()
+    .then(response => {
+      res.status(200).json(response);
     })
     .catch(err => {
       console.log(err);

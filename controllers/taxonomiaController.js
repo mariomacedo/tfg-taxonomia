@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const treeify = require("treeify");
 
 const Taxonomia = require("../models/taxonomiaModel");
 
@@ -12,11 +11,9 @@ exports.raiz = (req, res, next) => {
     .exec()
     .then(docs => {
       var args = {
-        fields: "_id name nivel bloco",
         recursive: true
       };
       docs[0].getChildrenTree(args, function(err, nodes) {
-        console.log(nodes);
         res.status(200).json(nodes);
       });
     })
@@ -34,7 +31,7 @@ exports.getNode = (req, res, next) => {
     .exec()
     .then(result => {
       var args = {
-        fields: "_id name nivel bloco",
+        fields: "_id name nivel bloco parent",
         recursive: true
       };
       result[0].getChildrenTree(args, function(err, nodes) {
@@ -55,6 +52,7 @@ exports.createNode = (req, res, next) => {
   //TODO: Validacao dos campos
   const node = new Taxonomia({
     name: req.body.name,
+    id: req.body.id,
     nivel: req.body.nivel,
     bloco: req.body.bloco
   });
@@ -107,7 +105,6 @@ exports.createNode = (req, res, next) => {
 };
 
 exports.removeNode = (req, res, next) => {
-  //TODO: Validacao dos campos
   Taxonomia.findOne({ name: req.body.name })
     .exec()
     .then(node => {
@@ -119,6 +116,35 @@ exports.removeNode = (req, res, next) => {
     .catch(err => {
       console.log(err);
       res.status(404).json({
+        error: err,
+        message: err.message
+      });
+    });
+};
+
+exports.editNode = (req, res, next) => {
+  Taxonomia.findOne({ name: req.body.name })
+    .exec()
+    .then(node => {
+      Taxonomia.findById(node.parent)
+        .exec()
+        .then(buscaPai => {
+          res.status(200).json({
+            pai: buscaPai,
+            filho: node
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            error: err,
+            message: err.message
+          });
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
         error: err,
         message: err.message
       });

@@ -33,17 +33,17 @@
 <nav>
     <div class="nav-wrapper">
         <a href="#" class="brand-logo center">Taxonomia</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <ul id="nav-mobile" class="left">
             <li><a href="#" id="side_bar_activator"><i class="material-icons">menu</i></a></li>
-            <li><a href="#modal_new" class="modal-trigger">Nova Ferramenta</a></li>
+            <li><a href="#modal_new" class="modal-trigger" onclick="buscarValores()">Classificar Ferramenta</a></li>
             <li>
                 <div class="input-field">
-                    <label for="autocomplete-input">Buscar Ferramenta</label>
-                    <input type="text" id="autocomplete-input" class="autocomplete">
+                    <label for="buscar-ferramenta-autocomplete">Buscar Ferramenta</label>
+                    <input type="text" id="buscar-ferramenta-autocomplete" class="autocomplete">
                 </div>
             </li>
         </ul>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <ul id="nav-mobile" class="right">
             <% if (!user) { %>
             <li><a href="#modal_login" class="modal-trigger">Entrar</a></li>
             <% } else { %>
