@@ -1,7 +1,14 @@
-<form id="form_test" action="/ferramenta/new" method="POST">
+<form id="form_new" action="/ferramenta/new" method="POST">
     <div class="row">
         <div class="col s12 m12 l12">
-            <h3>Nova Ferramenta</h3>
+            <div class="row">
+                <div class="col s10 m10 l10">
+                    <h3>Nova Ferramenta</h3>
+                </div>
+                <div class="col s2 m2 l2">
+                    <button class="btn-flat" type="reset" onclick="displayNovaFerramentaStepper('hide')">Cancelar</button>
+                </div>
+            </div>
             <ul class="stepper linear">
                 <li class="step active">
                     <div class="step-title waves-effect">Informações Gerais</div>
@@ -47,20 +54,24 @@
                                 <div class="col s12 m12 l12">
                                     <h6>Engajamento</h6>
                                 </div>
-                                <div class="col s12 m6 l6 input-field">
+                                <div class="col s12 m6 l5 input-field">
                                     <select name="engajamento_tecnica" id="engajamento_tecnica">
-                                        <option value="null">Selecione</option>
+                                        <option value="" disabled selected>Selecione</option>
                                     </select>
                                     <label>Técnica</label>
                                 </div>
+                                <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                    <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                        onclick="carregaModal('engajamento_tecnica')"><i class="material-icons">add</i></button>
+                                </div>
                                 <div class="col s12 m6 l6 input-field">
                                     <input name="engajamento_estrategia" id="engajamento_estrategia" type="text" class="validate">
-                                    <label for="estrategia">Estratégia</label>
+                                    <label for="engajamento_estrategia">Estratégia</label>
                                 </div>
                             </div>
                         </div>
                         <div class="step-actions">
-                            <button class="btn" type="submit">Salvar</button>
+                            <button class="waves-effect waves-dark btn next-step" type="submit">Salvar</button>
                             <button class="waves-effect waves-dark btn next-step">Avançar</button>
                             <button class="waves-effect waves-dark btn-flat previous-step">Voltar</button>
                         </div>
@@ -70,7 +81,7 @@
                     <div class="step-title waves-effect">Domínio</div>
                     <div class="step-content">
                         <div class="row">
-                            <div class="col s10 m4 l4 input-field">
+                            <div class="col s10 m4 l5 input-field">
                                 <select name="area" id="area">
                                     <option value="null">Selecione</option>
                                     <option value="1">Orçamento Participativo</option>
@@ -79,16 +90,16 @@
                                 </select>
                                 <label>Área</label>
                             </div>
-                            <div class="col s2 m2 l2">
-                                <label>Nova</label>
-                                <a href="#modal2" class="waves-effect waves-light btn modal-trigger">Modal 2</a>
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('area')"><i class="material-icons">add</i></button>
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <input name="localizacao" id="localizacao" type="text" class="validate">
                                 <label for="localizacao">Localização</label>
                             </div>
                             <div class="col s12 m6 l6 input-field">
-                                <h6>Area</h6>
+                                <h6>Esfera Governamental</h6>
                                 <p>
                                     <label>
                                         <input name="esfera_governamental" type="radio" value="Municipal" />
@@ -108,11 +119,14 @@
                                     </label>
                                 </p>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s10 m4 l5 input-field">
                                 <select name="idioma" id="idioma">
-                                    <option value="null">Selecione</option>
                                 </select>
                                 <label>Idioma</label>
+                            </div>
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('idioma')"><i class="material-icons">add</i></button>
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <input name="publico_alvo" id="publico_alvo" type="text" class="validate">
@@ -124,15 +138,15 @@
                                 <h6>Tipo de Participação</h6>
                                 <p>
                                     <label>
-                                        <input name="tipo_de_participacao" type="radio" id="voluntaria" />
+                                        <input name="tipo_de_participacao" type="radio" value="Voluntária" />
                                         <span>Voluntária</span>
                                     </label>
                                     <label>
-                                        <input name="tipo_de_participacao" type="radio" id="involuntaria" />
+                                        <input name="tipo_de_participacao" type="radio" value="Involuntária" />
                                         <span>Involuntária</span>
                                     </label>
                                     <label>
-                                        <input name="tipo_de_participacao" type="radio" id="participacao_ambos" />
+                                        <input name="tipo_de_participacao" type="radio" value="Ambos" />
                                         <span>Ambos</span>
                                     </label>
                                 </p>
@@ -152,116 +166,117 @@
                                 <h6>Plataforma</h6>
                                 <p>
                                     <label>
-                                        <input name="plataforma" type="radio" id="mobile" />
+                                        <input name="plataforma" type="radio" value="Mobile" />
                                         <span>Mobile</span>
                                     </label>
                                     <label>
-                                        <input name="plataforma" type="radio" id="web" />
+                                        <input name="plataforma" type="radio" value="Web" />
                                         <span>Web</span>
                                     </label>
                                     <label>
-                                        <input name="plataforma" type="radio" id="plataforma_ambos" />
+                                        <input name="plataforma" type="radio" value="Ambos" />
                                         <span>Ambos</span>
                                     </label>
                                 </p>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s10 m4 l5 input-field">
                                 <select id="hardware">
                                     <option value="null">Selecione</option>
                                 </select>
                                 <label>Hardware</label>
                             </div>
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('hardware')"><i class="material-icons">add</i></button>
+                            </div>
                             <div class="col s12 m12 l12">
                                 <h6>Desenvolvimento</h6>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s10 m4 l5 input-field">
                                 <select id="banco_de_dados">
                                     <option value="null">Selecione</option>
                                 </select>
                                 <label>Banco de Dados</label>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('banco_de_dados')"><i class="material-icons">add</i></button>
+                            </div>
+                            <div class="col s10 m4 l5 input-field">
                                 <select id="servidor_web">
                                     <option value="null">Selecione</option>
                                 </select>
                                 <label>Servidor</label>
                             </div>
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('servidor_web')"><i class="material-icons">add</i></button>
+                            </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Linguagens de Programação</h6>
-                                <p id="linguagens_de_programacao">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Java</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Javascript</span>
-                                    </label>
-                                </p>
+                                <p id="linguagens_de_programacao" />
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Bibliotecas</h6>
-                                <p id="bibliotecas">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>jQuery</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>D3.js</span>
-                                    </label>
-                                </p>
+                                <p id="bibliotecas" />
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>API</h6>
-                                <p id="api">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Geokey</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Placeholder</span>
-                                    </label>
-                                </p>
+                                <p id="api" />
                             </div>
-                            <div class="col s12 m12 l12">
-                                <h5>Funcionalidades</h5>
-                            </div>
+                        </div>
+                        <div class="step-actions">
+                            <button class="waves-effect waves-dark btn next-step">Avançar</button>
+                            <button class="waves-effect waves-dark btn-flat previous-step">Voltar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="step">
+                    <div class="step-title waves-effect">Funcionalidades</div>
+                    <div class="step-content">
+                        <div class="row">
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Dados Abertos</h6>
                                 <p>
                                     <label>
-                                        <input name="dados_abertos" type="radio" id="consome" />
+                                        <input name="dados_abertos" type="radio" value="Consome" />
                                         <span>Consome</span>
                                     </label>
                                     <label>
-                                        <input name="dados_abertos" type="radio" id="disponibiliza" />
+                                        <input name="dados_abertos" type="radio" value="Disponibiliza" />
                                         <span>Disponibiliza</span>
                                     </label>
                                     <label>
-                                        <input name="dados_abertos" type="radio" id="dados_abertos_ambos" />
+                                        <input name="dados_abertos" type="radio" value="Ambos" />
                                         <span>Ambos</span>
                                     </label>
                                     <label>
-                                        <input name="dados_abertos" type="radio" id="dados_abertos_nenhuma" />
+                                        <input name="dados_abertos" type="radio" value="Nenhuma das Opções" />
                                         <span>Nenhuma das Opções</span>
                                     </label>
                                 </p>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s10 m4 l5 input-field">
                                 <select id="tipo_de_informacao">
                                     <option value="null">Selecione</option>
                                 </select>
                                 <label>Tipo de Informação</label>
                             </div>
-                            <div class="col s12 m6 l6 input-field">
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('tipo_de_informacao')"><i class="material-icons">add</i></button>
+                            </div>
+                            <div class="col s10 m4 l5 input-field">
                                 <select id="moderacao">
                                     <option value="null">Selecione</option>
                                     <option value="1">Administrador</option>
                                     <option value="2">Usuário Responsável</option>
                                 </select>
                                 <label>Moderação</label>
+                            </div>
+                            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                                    onclick="carregaModal('moderacao')"><i class="material-icons">add</i></button>
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <select id="relacionamento">
@@ -284,20 +299,7 @@
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Técnica</h6>
-                                <p id="vis_tecnica">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Mapa</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Mapa de Calor</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Gráfico de Pizza</span>
-                                    </label>
-                                </p>
+                                <p id="vis_tecnica" />
                             </div>
                             <div class="col s12 m12 l6 input-field">
                                 <input id="informacao" type="text" class="validate">
@@ -308,46 +310,15 @@
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Tipo de Dado</h6>
-                                <p id="tipo-de-dados">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Vídeo</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Imagem</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Localização</span>
-                                    </label>
-                                </p>
+                                <p id="tipo_de_dado" />
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Estratégia</h6>
-                                <p id="estrategia">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Formulários</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Apps</span>
-                                    </label>
-                                </p>
+                                <p id="estrategia" />
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Processamento</h6>
-                                <p id="processamento_de_dados">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Mineração de Dados</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>OLAP</span>
-                                    </label>
-                                </p>
+                                <p id="processamento_de_dados" />
                             </div>
                             <div class="col s12 m12 l12">
                                 <h6>Interação Entre Usuários</h6>
@@ -358,16 +329,7 @@
                             </div>
                             <div class="col s12 m6 l6 input-field">
                                 <h6>Técnica</h6>
-                                <p id="interacao_tecnica">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Voto</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span>Discussão</span>
-                                    </label>
-                                </p>
+                                <p id="interacao_tecnica" />
                             </div>
                         </div>
                         <div class="step-actions">

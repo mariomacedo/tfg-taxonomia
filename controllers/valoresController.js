@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Valores = require("../models/valoresModel");
 
 exports.getValoresById = (req, res, next) => {
-  Valores.find({ name: req.params.id })
+  Valores.findOne({ name: req.params.id })
     .exec()
     .then(result => {
       res.json(result);
@@ -16,57 +16,45 @@ exports.getValoresById = (req, res, next) => {
     });
 };
 
-exports.setValor = (req, res, next) => {
-  Valores.find({ label: req.body.label })
-    .exec()
-    .then(result => {
-      if (result) {
-        var encontrado = true;
-        for (var i = 0; i < result[0]["valores"].length; i++) {
-          if (result[0]["valores"][i] == req.body["newValor"]) {
-            encontrado = false;
-          }
-        }
-        if (encontrado) {
-          Valores.updateOne(
-            { label: req.body.label },
-            { $push: { valores: [req.body["newValor"]] } }
-          )
-            .then(updated => {
-              res.status(201).json({
-                msg:
-                  "Valor: " +
-                  req.body.newValor +
-                  " adicionado com sucesso! -> " +
-                  req.body.label
-              });
-            })
-            .catch(err => {
-              console.log(err);
-              res.status(500).json({
-                error: err,
-                message: err.message
-              });
-            });
-        } else {
-          res.status(201).json({
-            msg: "Valor " + req.body.newValor + " já está em " + req.body.label
-          });
-        }
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err,
-        message: err.message
+exports.setValor = async (req, res, next) => {
+  const buscaName = await Valores.findOne({
+    name: req.body.name,
+    valores: req.body.newValor
+  });
+
+  const encontrado = (await buscaName) != null ? true : false;
+
+  if (!encontrado) {
+    Valores.updateOne(
+      { name: req.body.name },
+      { $push: { valores: [req.body["newValor"]] } }
+    )
+      .then(updated => {
+        res.status(201).json({
+          msg:
+            "Valor: " +
+            req.body.newValor +
+            " adicionado com sucesso! -> " +
+            req.body.name
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+          message: err.message
+        });
       });
+  } else {
+    res.status(404).json({
+      msg: "Erro!"
     });
+  }
 };
 
 exports.autocomplete = (req, res, next) => {
   Valores.find()
-    .select("-_id label valores")
+    .select("-_id label valores name")
     .exec()
     .then(result => {
       res.status(200).json(result);

@@ -37,3 +37,17 @@ nav,
 .hidden {
   display: none !important;
 }
+
+.valores-list {
+  padding: 2px;
+  margin: 0px;
+}
+
+p label {
+  margin-right: 10px;
+}
+
+h6 {
+  background: #c0c0c0;
+  padding: 5px;
+}

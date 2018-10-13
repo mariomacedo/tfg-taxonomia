@@ -14,8 +14,8 @@ const Esfera_Governamental = Object.freeze({
 });
 
 Tipo_de_Participacao = Object.freeze({
-  Voluntário: "Voluntário",
-  Involuntário: "Involuntário",
+  Voluntário: "Voluntária",
+  Involuntário: "Involuntária",
   Ambos: "Ambos"
 });
 
@@ -64,7 +64,7 @@ const ferramentaSchema = new mongoose.Schema({
   bibliotecas: { type: String },
   api: { type: String },
   //Funcionalidades
-  vis_tecnica: { type: String },
+  vis_tecnica: [{ type: String }],
   informacao: { type: String },
   tipo_de_dado: { type: String },
   estrategia: { type: String },

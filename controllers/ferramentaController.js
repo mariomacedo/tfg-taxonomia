@@ -23,23 +23,32 @@ exports.findAll = (req, res, next) => {
     });
 };
 
-exports.createFerramenta = (req, res, next) => {
+exports.createFerramenta = async (req, res, next) => {
   const newFerramenta = new Ferramenta({
     _id: new mongoose.Types.ObjectId()
   });
 
+  console.log("=================================");
+
   Object.keys(req.body).forEach(function(prop) {
     const newValor = new Valores({
-      _id: new mongoose.Types.ObjectId(),
-      label: prop,
-      valores: req.body[prop]
+      _id: new mongoose.Types.ObjectId()
     });
 
-    if (req.body[prop] != "null" && req.body[prop] != "") {
+    console.log(prop + ":" + req.body[prop]);
+
+    if (
+      req.body[prop] != "null" &&
+      req.body[prop] != "" &&
+      req.body[prop] != []
+    ) {
+      newValor.name = prop;
+      newValor.label = prop.toLocaleUpperCase();
+      newValor.valores = req.body[prop];
       newFerramenta[prop] = req.body[prop];
     }
 
-    Valores.find({ label: prop })
+    Valores.find({ name: prop })
       .exec()
       .then(result => {
         if (result.length > 0) {
@@ -51,7 +60,7 @@ exports.createFerramenta = (req, res, next) => {
           }
           if (encontrado) {
             Valores.updateOne(
-              { label: prop },
+              { name: prop },
               { $push: { valores: [req.body[prop]] } }
             )
               .then(updated => {
@@ -67,7 +76,7 @@ exports.createFerramenta = (req, res, next) => {
           } else {
             next;
           }
-        } else {
+        } else if (newValor.valores.length > 0) {
           newValor
             .save()
             .then(novo => {
@@ -80,6 +89,8 @@ exports.createFerramenta = (req, res, next) => {
                 message: err.message
               });
             });
+        } else {
+          next;
         }
       })
       .catch(err => {
