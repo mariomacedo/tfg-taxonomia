@@ -43,11 +43,8 @@ const ferramentaSchema = new mongoose.Schema({
   //Dominio
   area: { type: String },
   localizacao: { type: String },
-  esfera_governamental: {
-    type: String,
-    enum: Object.values(Esfera_Governamental)
-  },
-  idioma: { type: String },
+  esfera_governamental: { type: [String], default: undefined },
+  idioma: { type: [String], default: undefined },
   publico_alvo: { type: String },
   tipo_de_participacao: {
     type: String,
@@ -58,24 +55,25 @@ const ferramentaSchema = new mongoose.Schema({
     type: String,
     enum: Object.values(Plataforma)
   },
-  bando_de_dados: { type: String },
-  servidor_web: { type: String },
-  linguagens_de_programacao: { type: String },
-  bibliotecas: { type: String },
-  api: { type: String },
+  hardware: { type: String },
+  bando_de_dados: { type: [String], default: undefined },
+  servidor_web: { type: [String], default: undefined },
+  linguagens_de_programacao: { type: [String], default: undefined },
+  bibliotecas: { type: [String], default: undefined },
+  api: { type: [String], default: undefined },
   //Funcionalidades
-  vis_tecnica: [{ type: String }],
+  vis_tecnica: { type: [String], default: undefined },
   informacao: { type: String },
-  tipo_de_dado: { type: String },
-  estrategia: { type: String },
-  processamento_de_dados: { type: String },
+  tipo_de_dados: { type: [String], default: undefined },
+  estrategia: { type: [String], default: undefined },
+  processamento_de_dados: { type: [String], default: undefined },
   dados_abertos: {
     type: String,
     enum: Object.values(Dados_Abertos)
   },
   tipo_de_informacao: { type: String },
   objetivo: { type: String },
-  interacao_tecnica: { type: String },
+  interacao_tecnica: { type: [String], default: undefined },
   moderacao: { type: String },
   relacionamento: { type: Boolean },
   autenticacao: { type: Boolean }

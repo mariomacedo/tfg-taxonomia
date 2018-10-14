@@ -1,0 +1,82 @@
+<li class="step">
+    <div class="step-title waves-effect">Tecnologias</div>
+    <div class="step-content">
+        <div class="row">
+            <div class="col s12 m6 l6 input-field">
+                <h6>Plataforma</h6>
+                <p>
+                    <label>
+                        <input name="plataforma" type="radio" value="Mobile" />
+                        <span>Mobile</span>
+                    </label>
+                    <label>
+                        <input name="plataforma" type="radio" value="Web" />
+                        <span>Web</span>
+                    </label>
+                    <label>
+                        <input name="plataforma" type="radio" value="Ambos" />
+                        <span>Ambos</span>
+                    </label>
+                </p>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="hardware" id="hardware" />
+                </select>
+                <label>Hardware</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('hardware')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m12 l12">
+                <h6>Desenvolvimento</h6>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="banco_de_dados" id="banco_de_dados" multiple>
+                </select>
+                <label>Banco de Dados</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('banco_de_dados')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="servidor_web" id="servidor_web" multiple>
+                </select>
+                <label>Servidor</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('servidor_web')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="linguagens_de_programacao" id="linguagens_de_programacao" multiple></select>
+                <label>Linguagens de Programação</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('linguagens_de_programacao')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="bibliotecas" id="bibliotecas" multiple></select>
+                <label>Bibliotecas</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('bibliotecas')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="api" id="api" multiple></select>
+                <label>API</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('api')"><i class="material-icons">add</i></button>
+            </div>
+        </div>
+        <div class="step-actions">
+            <button class="waves-effect waves-dark btn next-step">Avançar</button>
+            <button class="waves-effect waves-dark btn-flat previous-step">Voltar</button>
+        </div>
+    </div>
+</li>

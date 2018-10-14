@@ -1,0 +1,61 @@
+<li class="step">
+    <div class="step-title waves-effect">Domínio</div>
+    <div class="step-content">
+        <div class="row">
+            <div class="col s10 m4 l5 input-field">
+                <select name="area" id="area">
+                </select>
+                <label for="area">Área</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('area')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m6 l6 input-field">
+                <input name="localizacao" id="localizacao" type="text" class="validate">
+                <label for="localizacao">Localização</label>
+            </div>
+            <div class="col s12 m6 l6 input-field">
+                <select multiple name="esfera_governamental" id="esfera_governamental"></select>
+                <label>Esfera Governamental</label>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="idioma" id="idioma" multiple>
+                </select>
+                <label>Idioma</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('idioma')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m6 l6 input-field">
+                <input name="publico_alvo" id="publico_alvo" type="text" class="validate">
+                <label for="publico_alvo">Público Alvo</label>
+            </div>
+
+            <!-- $('input[name=tipo_participacao]:checked').attr('id') -->
+            <div class="col s12 m6 l6 input-field">
+                <h6>Tipo de Participação</h6>
+                <p>
+                    <label>
+                        <input name="tipo_de_participacao" type="radio" value="Voluntária" />
+                        <span>Voluntária</span>
+                    </label>
+                    <label>
+                        <input name="tipo_de_participacao" type="radio" value="Involuntária" />
+                        <span>Involuntária</span>
+                    </label>
+                    <label>
+                        <input name="tipo_de_participacao" type="radio" value="Ambos" />
+                        <span>Ambos</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="step-actions">
+            <button class="waves-effect waves-dark btn" type="submit">Salvar</button>
+            <button class="waves-effect waves-dark btn next-step">Avançar</button>
+            <button class="waves-effect waves-dark btn-flat previous-step">Voltar</button>
+        </div>
+    </div>
+</li>

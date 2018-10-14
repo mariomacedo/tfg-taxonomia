@@ -51,3 +51,58 @@ h6 {
   background: #c0c0c0;
   padding: 5px;
 }
+
+table.vertical-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  display: block !important;
+  position: relative !important;
+}
+
+table.vertical-table thead {
+  display: block;
+  float: left;
+  border: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+table.vertical-table thead tr {
+  display: block;
+  padding: 0 10px 0 0;
+}
+
+table.vertical-table tbody {
+  display: block;
+  width: auto;
+  position: relative;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+table.vertical-table tbody tr {
+  display: inline-block;
+  vertical-align: top;
+}
+
+table.vertical-table tr {
+  border-bottom: none;
+  padding: 0 10px;
+}
+
+table.vertical-table td {
+  display: block;
+  min-height: 1.25em;
+  text-align: left;
+}
+
+table.vertical-table th {
+  display: block;
+  text-align: right;
+}
+
+table.vertical-table th,
+table.vertical-table td {
+  margin: 0;
+  vertical-align: top;
+}

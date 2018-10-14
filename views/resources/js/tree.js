@@ -85,6 +85,7 @@ function montaArvore(source) {
     })
     .on("click", function(d) {
       // TODO: Insert data
+      console.log("clicked ID: " + d.id);
       buscaFerramentaById(d.id);
       var toastHTML =
         "<span>" +

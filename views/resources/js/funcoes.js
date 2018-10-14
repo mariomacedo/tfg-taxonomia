@@ -1,5 +1,3 @@
-var optSelecione = $("<option value='null' selected>Selecione</option>");
-
 function dismissToast() {
   var toastElement = $(".toast");
   var toastInstance = M.Toast.getInstance(toastElement);
@@ -53,7 +51,7 @@ function buscarValores() {
         l.valores.forEach(v => {
           autocomplete[v] = null;
         });
-        $("#" + l.label).autocomplete({
+        $("#" + l.name).autocomplete({
           data: autocomplete
         });
       } else if ($("#" + l.name).prop("nodeName") == "SELECT") {
@@ -61,20 +59,34 @@ function buscarValores() {
         select
           .find("option")
           .remove()
-          .end()
-          .append(optSelecione);
+          .end();
+        select.formSelect();
+        var optSelecione = select.prop("multiple")
+          ? $('<option value="null" selected disabled >Selecione</option>')
+          : $('<option value="null" selected >Selecione</option>');
+        select.append(optSelecione);
         l.valores.forEach(v => {
           var opt = $("<option />");
-          opt.val(v).text(v);
+          if (v == "true") {
+            opt.val(v).text("Sim");
+          } else if (v == "false") {
+            opt.val(v).text("Não");
+          } else {
+            opt.val(v).text(v);
+          }
           select.append(opt);
         });
         select.formSelect();
       } else if ($("#" + l.name).prop("nodeName") == "P") {
         var p = $("#" + l.name);
-        console.log(l.name);
+        p.find("label")
+          .remove()
+          .end();
         l.valores.forEach(v => {
           var label = $("<label/>");
-          var input = $("<input name='" + l.name + "' type='checkbox'/>");
+          var input = $(
+            '<input name="' + l.name + '" value="' + v + '" type="checkbox"/>'
+          );
           var span = $("<span/>").text(v);
           label.append(input).append(span);
           p.append(label);
@@ -117,28 +129,70 @@ function buscarFerramentas() {
 }
 
 function buscaFerramentaById(id) {
-  $.get("/valor/" + id, response => {
-    console.log("id: " + id);
-    var label = response[0].label.toUpperCase();
-    const ul = $(".collection.with-header");
-    ul.show();
-    ul.empty();
-    const header = '<li class="collection-header"><h4>' + label + "</h4></li>";
-    ul.append(header);
-    if (response.length > 0) {
-      response[0].valores.forEach(v => {
-        var li =
-          '<li class="collection-item"><div>' +
-          v +
-          '<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>';
-        ul.append(li);
-      });
-    } else {
-      var liEmpty =
-        '<li class="collection-item">Não há valor para a classe selecionada. </li>';
-      ul.append(liEmpty);
-    }
+  var aux = $.get("/valor/" + id).done(function(r) {
+    $.get("/ferramenta/findByValor/" + id, async function(response) {
+      if (response.length > 0 && response != null) {
+        const ul = $(".collection.with-header");
+        ul.show();
+        ul.empty();
+        const header =
+          '<li class="collection-header"><h4>' +
+          (await r.label) +
+          '<a onclick="dismissFerramenta()" class="secondary-content"><i class="material-icons">close</i></a></h4><p>' +
+          (await r.desc_label) +
+          '</p><h6 class="center">Ferramentas</h6></li>';
+        ul.append(header);
+        response.forEach(v => {
+          var li =
+            '<li class="collection-item"><div>' +
+            v.name +
+            "<a onclick=\"showFerramenta('" +
+            v.name +
+            '\')" class="secondary-content"><i class="material-icons">remove_red_eye</i></a></div></li>';
+          ul.append(li);
+        });
+      } else {
+        var liEmpty =
+          '<li class="collection-item">Não há valor para a classe selecionada. </li>';
+        ul.append(liEmpty);
+      }
+    });
   });
+}
+
+function showFerramenta(id) {
+  $.get("valor/autocomplete/all").done(async function(response) {
+    var ferramenta = await $.get("/ferramenta/" + id, async function(r) {
+      ferramenta = r;
+    });
+    var table = $(
+      '<div id="table_ferramenta" class="col s12 m12 l4"><div class="row center"><div class="col s12 m12 l12"><h5>' +
+        id +
+        '<a onclick="alert()" class="secondary-content"><i class="material-icons">edit</i></a></h5></div></div><table class="striped vertical-table"><thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>'
+    );
+    await $(".row.cover")
+      .find("#table_ferramenta")
+      .remove()
+      .end()
+      .append(table);
+
+    await $("thead > tr")
+      .find("th")
+      .remove()
+      .end();
+
+    await response.forEach(v => {
+      if (ferramenta[v.name] && v.name != "name") {
+        $("thead > tr").append("<th>" + v.label + "</th>");
+        $("tbody > tr").append("<td>" + ferramenta[v.name] + "</td>");
+      }
+    });
+  });
+}
+
+function dismissFerramenta(){
+  $(".collection.with-header").hide();
+  $("#table_ferramenta").hide();
 }
 
 function carregaModal(id) {

@@ -1,0 +1,117 @@
+<li class="step">
+    <div class="step-title waves-effect">Funcionalidades</div>
+    <div class="step-content">
+        <div class="row">
+            <div class="col s12 m6 l6 input-field">
+                <h6>Dados Abertos</h6>
+                <p>
+                    <label>
+                        <input name="dados_abertos" type="radio" value="Consome" />
+                        <span>Consome</span>
+                    </label>
+                    <label>
+                        <input name="dados_abertos" type="radio" value="Disponibiliza" />
+                        <span>Disponibiliza</span>
+                    </label>
+                    <label>
+                        <input name="dados_abertos" type="radio" value="Ambos" />
+                        <span>Ambos</span>
+                    </label>
+                    <label>
+                        <input name="dados_abertos" type="radio" value="Nenhuma das Opções" />
+                        <span>Nenhuma das Opções</span>
+                    </label>
+                </p>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="tipo_de_informacao" id="tipo_de_informacao" multiple>
+                </select>
+                <label>Tipo de Informação</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('tipo_de_informacao')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="moderacao" id="moderacao">
+                </select>
+                <label>Moderação</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('moderacao')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m6 l6 input-field">
+                <select name="direcionamento" id="direcionamento">
+                </select>
+                <label>Direcionamento (Poder Público)</label>
+            </div>
+            <div class="col s12 m6 l6 input-field">
+                <select name="autenticacao" id="autenticacao">
+                </select>
+                <label>Autenticação</label>
+            </div>
+            <div class="col s12 m12 l12">
+                <h6>Visualização de Informação</h6>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="vis_tecnica" id="vis_tecnica" multiple></select>
+                <label>Técnica</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('vis_tecnica')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m12 l6 input-field">
+                <input name="informacao" id="informacao" type="text" class="validate">
+                <label for="informacao">Informação</label>
+            </div>
+            <div class="col s12 m12 l12">
+                <h6>Coleta de Dados</h6>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="tipo_de_dados" id="tipo_de_dados" multiple></select>
+                <label>Tipo de Dado</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('tipo_de_dados')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="estrategia" id="estrategia" multiple></select>
+                <label>Estratégia</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('estrategia')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="processamento_de_dados" id="processamento_de_dados" multiple></select>
+                <label>Processamento de Dados</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('processamento_de_dados')"><i class="material-icons">add</i></button>
+            </div>
+            <div class="col s12 m12 l12">
+                <h6>Interação Entre Usuários</h6>
+            </div>
+            <div class="col s12 m12 l6 input-field">
+                <input name="objetivo" id="objetivo" type="text" class="validate">
+                <label for="objetivo">Objetivo</label>
+            </div>
+            <div class="col s10 m4 l5 input-field">
+                <select name="interacao_tecnica" id="interacao_tecnica" multiple></select>
+                <label>Técnica</label>
+            </div>
+            <div class="col s2 m2 l1 center" style="margin: 20px 15px 0 -15px">
+                <button type="button" data-target="modal_new" class="waves-effect waves-light btn modal-trigger"
+                    onclick="carregaModal('interacao_tecnica')"><i class="material-icons">add</i></button>
+            </div>
+        </div>
+        <div class="step-actions">
+            <button class="waves-effect waves-dark btn next-step">Avançar</button>
+            <button class="waves-effect waves-dark btn-flat previous-step">Voltar</button>
+        </div>
+    </div>
+</li>
